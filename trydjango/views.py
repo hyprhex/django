@@ -2,7 +2,8 @@
 To render web pages 
 """
 import random
-from django.http import HttpResponse
+# from django.http import HttpResponse
+from django.shortcuts import render
 from articles.models import Article
 
 def home_view(request):
@@ -10,7 +11,7 @@ def home_view(request):
     name = 'Salah'
     random_id = random.randint(1, 4)
 
-    article_obj = Article.objects.get(id=random_id)
+    article_obj = Article.objects.get(id=2)
 
     context = {
         'title': article_obj.title,
@@ -18,9 +19,4 @@ def home_view(request):
         'content': article_obj.content,
     }
 
-    HTML_STRING = """
-    <h1>{title} (id: {id})</h1>
-    <p>{content}</p>
-    """.format(**context)
-
-    return HttpResponse(HTML_STRING)
+    return render(request, 'articles/index.html', context)
